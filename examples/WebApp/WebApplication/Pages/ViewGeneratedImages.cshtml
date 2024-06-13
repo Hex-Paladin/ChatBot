@@ -1,0 +1,35 @@
+@page
+@model WebApplication.Pages.ViewGeneratedImagesModel
+
+@{
+    ViewData["Title"] = "Generated Images";
+}
+
+<h1>Generated Images</h1>
+
+@if (Model.GeneratedImages.Any())
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>Search Text</th>
+            <th>Image</th>
+            <th>Timestamp</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var image in Model.GeneratedImages)
+            {
+        <tr>
+            <td>@image.SearchText</td>
+            <td><img src="@image.ImageUrl" width="300" height="300"></td>
+            <td>@image.Timestamp.ToString("g")</td>
+        </tr>
+            }
+    </tbody>
+</table>
+}
+else
+{
+<p>No generated images available.</p>
+}

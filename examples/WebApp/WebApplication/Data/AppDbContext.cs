@@ -8,5 +8,6 @@ namespace WebApplication.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Chat> Chats { get; set; }
+        public DbSet<GeneratedImage> GeneratedImages { get; set; }  // Add this line
     }
 }
