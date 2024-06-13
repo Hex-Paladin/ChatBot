@@ -39,6 +39,7 @@ This is a simple AI chat bot web application built using ASP.NET Core and OpenAI
 3. Build and run the application:
 
    ```bash
+   cd ""C:\yourpath\WebApp\WebApplication"
    dotnet build
    dotnet run --project WebApplication
    ```
