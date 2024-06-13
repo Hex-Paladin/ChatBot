@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using OpenAI.Net;
 using OpenAI.Net.Models.Requests;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication.Data;
+using WebApplication.Models;
 
 namespace WebApplication.Pages
 {
@@ -12,14 +16,16 @@ namespace WebApplication.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IOpenAIService _openAIService;
+        private readonly AppDbContext _context;
 
         public List<string> Results { get; set; } = new List<string>();
         public string ErrorMessage { get; set; } = "";
 
-        public IndexModel(ILogger<IndexModel> logger, IOpenAIService openAIService)
+        public IndexModel(ILogger<IndexModel> logger, IOpenAIService openAIService, AppDbContext context)
         {
             _logger = logger;
             _openAIService = openAIService;
+            _context = context;
         }
 
         public void OnGet()
@@ -54,6 +60,16 @@ namespace WebApplication.Pages
             if (response.IsSuccess)
             {
                 Results = response.Result!.Choices.Select(i => i.Message.Content).ToList();
+
+                var chat = new Chat
+                {
+                    UserQuery = SearchText,
+                    BotResponse = string.Join("\n", Results),
+                    Timestamp = DateTime.UtcNow
+                };
+
+                _context.Chats.Add(chat);
+                await _context.SaveChangesAsync();
             }
             else
             {

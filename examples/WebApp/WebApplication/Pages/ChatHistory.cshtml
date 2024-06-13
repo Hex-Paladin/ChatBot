@@ -1,0 +1,35 @@
+@page
+@model WebApplication.Pages.ChatHistoryModel
+
+@{
+    ViewData["Title"] = "Chat History";
+}
+
+<h2>Chat History</h2>
+
+@if (Model.Chats.Any())
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>User Query</th>
+            <th>Bot Response</th>
+            <th>Timestamp</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var chat in Model.Chats)
+            {
+        <tr>
+            <td>@chat.UserQuery</td>
+            <td>@chat.BotResponse</td>
+            <td>@chat.Timestamp.ToString("g")</td>
+        </tr>
+            }
+    </tbody>
+</table>
+}
+else
+{
+<p>No chat history available.</p>
+}

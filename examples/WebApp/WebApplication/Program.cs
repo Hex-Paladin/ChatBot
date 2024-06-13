@@ -1,4 +1,6 @@
 using OpenAI.Net;
+using Microsoft.EntityFrameworkCore;
+using WebApplication.Data;
 
 namespace WebApplication
 {
@@ -11,8 +13,12 @@ namespace WebApplication
             // Add services to the container.
             builder.Services.AddRazorPages();
 
-            //Add OpenAI
+            // Add OpenAI
             builder.Services.AddOpenAIServices(builder.Configuration["OpenAI:ApiKey"]);
+
+            // Add DbContext
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 
