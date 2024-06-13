@@ -34,7 +34,7 @@ namespace WebApplication.Pages
         }
 
         [BindProperty]
-        public string SearchText { get; set; } = "What does USA stand for?";
+        public string SearchText { get; set; } = "Enter prompt here";
         [BindProperty]
         public int MaxResults { get; set; } = 1;
         [BindProperty]
